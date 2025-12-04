@@ -16,7 +16,7 @@ A comprehensive TypeScript SDK for interacting with the Romanian ANAF e-Factura 
 ## Installation
 
 ```bash
-pnpm add efactura-ts-sdk
+pnpm add anaf-ts-sdk
 ```
 
 ## Quick Start
