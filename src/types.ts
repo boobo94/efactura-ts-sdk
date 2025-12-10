@@ -271,7 +271,7 @@ export enum InvoiceTypeCode {
    * This may not be a complete invoice according to legal requirements.
    * For instance the line item information might be excluded.
    */
-  INVOICE_INFORMAtION_FOR_ACCOUNTING_PURPOSES = '751',
+  INVOICE_INFORMATION_FOR_ACCOUNTING_PURPOSES = '751',
 }
 
 /**
