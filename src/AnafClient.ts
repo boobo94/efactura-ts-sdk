@@ -450,7 +450,7 @@ export class AnafEfacturaClient {
         throw new AnafValidationError('XML file name is required when uploading Buffer');
       }
       // Create Blob-like object for Node.js compatibility
-      const blob = new Blob([xmlFile], { type: 'text/xml' });
+      const blob = new Blob([xmlFile as any], { type: 'text/xml' });
       formData.append('file', blob, xmlFileName);
     } else {
       throw new AnafValidationError('Invalid XML file type. Expected File or Buffer');
@@ -463,7 +463,7 @@ export class AnafEfacturaClient {
         throw new AnafValidationError('Signature file name is required when uploading Buffer');
       }
       // Create Blob-like object for Node.js compatibility
-      const blob = new Blob([signatureFile], { type: 'application/octet-stream' });
+      const blob = new Blob([signatureFile as any], { type: 'application/octet-stream' });
       formData.append('signature', blob, signatureFileName);
     } else {
       throw new AnafValidationError('Invalid signature file type. Expected File or Buffer');
