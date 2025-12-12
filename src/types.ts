@@ -385,7 +385,7 @@ export interface AnafCompanyData {
   /** Trade registry number */
   registrationNumber: string;
   /** Company address */
-  address: string;
+  address: Address;
   /** Postal code */
   postalCode: string | null;
   /** Contact phone */
@@ -433,12 +433,101 @@ export interface AnafScpTvaInfo {
   scpTVA: boolean;
 }
 
+export interface AnafCompanyOfficeAddress {
+  /** Denumire strada sediu */
+  sdenumire_Strada: string;
+  /** Numar strada sediu */
+  snumar_Strada: string;
+  /** Denumire localitate sediu */
+  sdenumire_Localitate: string;
+  /** Cod localitate sediu */
+  scod_Localitate: string;
+  /** Denumire judet sediu */
+  sdenumire_Judet: string;
+  /** Cod judet sediu */
+  scod_Judet: string;
+  /**  Cod judet sediu auto */
+  scod_JudetAuto: string;
+  /** Denumire tara sediu */
+  stara: string;
+  /** Detalii adresa sediu */
+  sdetalii_Adresa: string;
+  /** Cod postal sediu */
+  scod_Postal: string;
+}
+
+export interface AnafCompanyInactiveState {
+  dataInactivare: string;
+  dataReactivare: string;
+  dataPublicare: string;
+  /** Data radiere */
+  dataRadiere: string;
+  /**
+   * Status inactiv
+   * - true pentru inactiv
+   * - false in cazul in care nu este inactiv la data cautata
+   * */
+  statusInactivi: boolean;
+}
+
+export interface AnafCompanyRTVAI {
+  /** Data de la care aplica sistemul TVA la incasare */
+  dataInceputTvaInc: string;
+  /** Data pana la care aplica sistemul TVA la încasare */
+  dataSfarsitTvaInc: string;
+  /** Data actualizarii */
+  dataActualizareTvaInc: string;
+  /** Data publicarii */
+  dataPublicareTvaInc: string;
+  /** Tip actualizare */
+  tipActTvaInc: string;
+  /** Este platitor de TVA la incasare la data cautata */
+  statusTvaIncasare: boolean;
+}
+
+export interface AnafCompanySplitTVA {
+  dataInceputSplitTVA: string;
+  dataAnulareSplitTVA: string;
+  /**
+   * Aplica plata defalcata a TVA la data cautata
+   */
+  statusSplitTVA: boolean;
+}
+
+export interface AnafCompanyTaxResidency {
+  /** Denumire strada domiciliu fiscal */
+  ddenumire_Strada: string;
+  /** Numar strada domiciliu fiscal */
+  dnumar_Strada: string;
+  /** Denumire localitate domiciliu fiscal */
+  ddenumire_Localitate: string;
+  /** Cod localitate domiciliu fiscal */
+  dcod_Localitate: string;
+  /** Denumire judet domiciliu fiscal */
+  ddenumire_Judet: string;
+  /** Cod judet domiciliu fiscal */
+  dcod_Judet: string;
+  /** Cod judet domiciliu fiscal auto */
+  dcod_JudetAuto: string;
+  /** Denumire tara domiciliu fiscal */
+  dtara: string;
+  /** Detalii adresa domiciliu fiscal */
+  ddetalii_Adresa: string;
+  /** Cod postal domiciliu fiscal */
+  dcod_Postal: string;
+}
+
 /**
  * Internal ANAF API found company structure
  */
 export interface AnafFoundCompany {
   date_generale: AnafCompanyInfo;
   inregistrare_scop_Tva: AnafScpTvaInfo;
+  inregistrare_RTVAI: AnafCompanyRTVAI;
+  stare_inactiv: AnafCompanyInactiveState;
+  inregistrare_SplitTVA: AnafCompanySplitTVA;
+  adresa_sediu_social: AnafCompanyOfficeAddress;
+  adresa_domiciliu_fiscal: AnafCompanyTaxResidency;
 }
 
 /**

@@ -105,7 +105,12 @@ export class AnafDetailsClient {
           vatCode: element.date_generale.cui.toString(),
           name: element.date_generale.denumire,
           registrationNumber: element.date_generale.nrRegCom,
-          address: element.date_generale.adresa,
+          address: {
+            street: element.adresa_sediu_social.sdenumire_Strada,
+            city: element.adresa_sediu_social.sdenumire_Localitate,
+            county: element.adresa_sediu_social.sdenumire_Judet,
+            postalZone: element.adresa_sediu_social.scod_Postal,
+          },
           postalCode: element.date_generale.codPostal,
           contactPhone: element.date_generale.telefon,
           scpTva: element.inregistrare_scop_Tva.scpTVA || false,
