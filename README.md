@@ -16,7 +16,7 @@ A comprehensive TypeScript SDK for interacting with the Romanian ANAF e-Factura 
 ## Installation
 
 ```bash
-yarn add anaf-ts-sdk
+yarn add efactura-sdk
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ The SDK is organized into four main classes:
 ### 1. AnafAuthenticator - OAuth 2.0 Authentication
 
 ```typescript
-import { AnafAuthenticator } from 'anaf-ts-sdk';
+import { AnafAuthenticator } from 'efactura-sdk';
 
 const auth = new AnafAuthenticator({
   clientId: 'your-oauth-client-id',
@@ -49,7 +49,7 @@ const newTokens = await auth.refreshAccessToken(tokens.refresh_token);
 ### 2. AnafClient - API Operations
 
 ```typescript
-import { AnafClient } from 'anaf-ts-sdk';
+import { AnafClient } from 'efactura-sdk';
 
 const client = new AnafClient({
   vatNumber: 'RO12345678',
@@ -86,7 +86,7 @@ const pdfBuffer = await client.convertXmlToPdf(tokens.access_token, xmlContent, 
 ### 3. UblBuilder - UBL XML Generation
 
 ```typescript
-import { UblBuilder } from 'anaf-ts-sdk';
+import { UblBuilder } from 'efactura-sdk';
 
 const builder = new UblBuilder();
 
@@ -128,7 +128,7 @@ const xml = builder.generateInvoiceXml({
 ### 4. AnafDetailsClient - Company Data Lookup
 
 ```typescript
-import { AnafDetailsClient } from 'anaf-ts-sdk';
+import { AnafDetailsClient } from 'efactura-sdk';
 
 const detailsClient = new AnafDetailsClient({
   timeout: 30000,
@@ -212,7 +212,7 @@ const minimalClient = new AnafDetailsClient({
 ## Complete Example
 
 ```typescript
-import { AnafAuthenticator, AnafClient, AnafDetailsClient, UblBuilder } from 'anaf-ts-sdk';
+import { AnafAuthenticator, AnafClient, AnafDetailsClient, UblBuilder } from 'efactura-sdk';
 
 // Setup
 const auth = new AnafAuthenticator({
@@ -566,7 +566,7 @@ const client = new AnafClient({
 The SDK provides specific error types for different scenarios:
 
 ```typescript
-import { AnafAuthenticationError, AnafValidationError, AnafApiError } from 'anaf-ts-sdk';
+import { AnafAuthenticationError, AnafValidationError, AnafApiError } from 'efactura-sdk';
 
 try {
   await client.uploadDocument(token, xml);
@@ -589,7 +589,7 @@ try {
 The SDK is written in TypeScript and provides comprehensive type definitions:
 
 ```typescript
-import type { InvoiceInput, UploadStatus, ListMessagesResponse, ValidationResult, OAuthTokens } from 'anaf-ts-sdk';
+import type { InvoiceInput, UploadStatus, ListMessagesResponse, ValidationResult, OAuthTokens } from 'efactura-sdk';
 ```
 
 ## Security Best Practices
