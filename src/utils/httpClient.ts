@@ -23,7 +23,7 @@ export class HttpClient {
   private defaultTimeout: number;
 
   constructor(config: { baseURL?: string; timeout?: number } = {}) {
-    this.baseURL = config.baseURL || '';
+    this.baseURL = this.normalizeBaseURL(config.baseURL);
     this.defaultTimeout = config.timeout || 30000;
   }
 
@@ -34,7 +34,7 @@ export class HttpClient {
     const { timeout = this.defaultTimeout, baseURL, ...fetchOptions } = options;
 
     // Build full URL
-    const fullUrl = baseURL || this.baseURL ? new URL(url, baseURL || this.baseURL).toString() : url;
+    const fullUrl = this.buildFullUrl(url, baseURL);
 
     // Setup timeout
     const controller = new AbortController();
@@ -161,5 +161,34 @@ export class HttpClient {
     } else {
       throw new AnafApiError(message, status, errorText);
     }
+  }
+
+  /**
+   * Normalize base URLs and relative paths to avoid resolution issues
+   */
+  private buildFullUrl(url: string, requestBaseURL?: string): string {
+    const absoluteUrlPattern = /^[a-zA-Z][a-zA-Z\d+\-.]*:/;
+
+    if (absoluteUrlPattern.test(url)) {
+      return url;
+    }
+
+    const base = this.normalizeBaseURL(requestBaseURL || this.baseURL);
+
+    if (!base) {
+      return url;
+    }
+
+    const relativeUrl = url.replace(/^\/+/, '');
+
+    return new URL(relativeUrl, base).toString();
+  }
+
+  private normalizeBaseURL(baseURL?: string): string {
+    if (!baseURL) {
+      return '';
+    }
+
+    return baseURL.endsWith('/') ? baseURL : `${baseURL}/`;
   }
 }
