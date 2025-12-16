@@ -26,6 +26,9 @@ import {
   buildDownloadParams,
   buildListMessagesParams,
   buildPaginatedMessagesParams,
+  VALIDATE_XML_OAUTH_URL,
+  BASE_PATH_CERT_PROD,
+  BASE_PATH_OAUTH_PROD,
 } from './constants';
 import {
   parseUploadResponse,
@@ -389,7 +392,8 @@ export class AnafEfacturaClient {
     this.validateXmlContent(xmlContent);
     this.validateDocumentStandard(standard);
 
-    const url = `/validare/${standard}`;
+    // ANAF exposes /validare only in production; always target the prod URL
+    const url = `${BASE_PATH_OAUTH_PROD}/validare/${standard}`;
 
     const { data, error } = tryCatch(async () => {
       const accessToken = await this.getValidAccessToken();

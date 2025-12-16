@@ -530,6 +530,9 @@ The SDK implements all endpoints from the ANAF e-Factura OpenAPI specification:
 - ✅ Digital signature validation (`/api/validate/signature`)
 - ✅ XML to PDF conversion (`/transformare/{standard}`)
 - ✅ XML to PDF without validation (`/transformare/{standard}/DA`)
+- ℹ️ XML validation is only available on ANAF production endpoints; the SDK uses the production URL even when `testMode` is enabled
+
+ANAF serves `/validare/{standard}` only in production. The SDK issues a `POST` with `Content-Type: text/plain` to `https://api.anaf.ro/prod/FCTEL/rest/validare/{FACT1|FCN}` (or your custom base path for proxies). There is no test endpoint for validation.
 
 ### UBL Generation
 
