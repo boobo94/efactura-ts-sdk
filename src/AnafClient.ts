@@ -47,6 +47,7 @@ import { AnafAuthenticator } from './AnafAuthenticator';
  *
  * This client handles automatic token management and all API operations.
  * Both configuration and authenticator are required for initialization.
+ * Pass authentication tokens obtained from the OAuth flow if you have them.
  *
  * @example
  * ```typescript
@@ -65,6 +66,8 @@ import { AnafAuthenticator } from './AnafAuthenticator';
  *   vatNumber: 'RO12345678',
  *   testMode: true,
  *   refreshToken: 'your_refresh_token' // obtained from OAuth flow
+ *   accessToken: 'your_access_token', // obtained from OAuth flow
+ *   expiresAt: 123456 // obtained from OAuth flow
  * }, authenticator);
  *
  * // Upload document (automatic token management)
@@ -80,7 +83,7 @@ import { AnafAuthenticator } from './AnafAuthenticator';
  * ```
  */
 export class AnafEfacturaClient {
-  private config: Required<AnafEfacturaClientConfig>;
+  private config: AnafEfacturaClientConfig;
   private httpClient: HttpClient;
   private basePath: string;
 
@@ -107,6 +110,8 @@ export class AnafEfacturaClient {
       axiosOptions: config.axiosOptions ?? {},
       basePath: config.basePath ?? '',
       refreshToken: config.refreshToken,
+      accessToken: config.accessToken,
+      expiresAt: config.expiresAt,
     };
 
     this.basePath = this.config.basePath || getBasePath('oauth', this.config.testMode);
@@ -118,6 +123,8 @@ export class AnafEfacturaClient {
 
     // Initialize authentication - both refreshToken and authenticator are now required
     this.refreshToken = config.refreshToken;
+    this.currentAccessToken = config.accessToken;
+    this.accessTokenExpiresAt = config.expiresAt;
     this.authenticator = authenticator;
   }
 

@@ -54,7 +54,12 @@ import { AnafClient } from 'efactura-sdk';
 const client = new AnafClient({
   vatNumber: 'RO12345678',
   testMode: true, // Use test environment
-});
+  refreshToken: tokens.refresh_token, // Optional: refresh token
+  accessToken: tokens.access_token, // Optional: access token
+  // Optional: token expiration. Provide epoch milliseconds (ms since 1970),
+  // for example: `Date.now() + tokens.expires_in * 1000`.
+  expiresAt: tokens.expires_at,
+};
 
 // Upload a document
 const uploadResult = await client.uploadDocument(tokens.access_token, xmlContent, {

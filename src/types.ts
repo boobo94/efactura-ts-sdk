@@ -21,6 +21,8 @@ export interface AnafAuthConfig {
  *   vatNumber: 'RO12345678',
  *   testMode: true,
  *   refreshToken: 'your_refresh_token',
+ *   accessToken: 'your_access_token',
+ *   expiresAt: 123456
  * };
  * ```
  */
@@ -39,6 +41,15 @@ export interface AnafEfacturaClientConfig {
   // Authentication configuration for automatic token management
   /** OAuth 2.0 refresh token for automatic access token refresh */
   refreshToken: string;
+  accessToken?: string;
+  /**
+   * Token expiration time as Unix epoch in milliseconds (ms since 1970).
+   *
+   * Note: OAuth responses commonly include `expires_in` (seconds) or
+   * `expires_at` (epoch seconds). When providing `expiresAt` to the
+   * client you should pass milliseconds (e.g. `Date.now() + tokens.expires_in * 1000`).
+   */
+  expiresAt?: number;
 }
 
 /**
