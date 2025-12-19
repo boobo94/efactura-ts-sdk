@@ -1,13 +1,6 @@
 import { create } from 'xmlbuilder2';
 import type { XMLBuilder } from 'xmlbuilder2/lib/interfaces'; // For v3.1.1
-import {
-  InvoiceInput,
-  InvoiceLine,
-  Party,
-  Address,
-  UblInvoiceInput, // Legacy compatibility
-  InvoiceTypeCode,
-} from '../types';
+import { InvoiceInput, InvoiceLine, Party, Address, InvoiceTypeCode } from '../types';
 import { UBL_CUSTOMIZATION_ID, DEFAULT_CURRENCY, DEFAULT_COUNTRY_CODE, DEFAULT_UNIT_CODE } from '../constants';
 import { formatDateForAnaf } from '../utils/dateUtils';
 import { AnafValidationError } from '../errors';
@@ -66,11 +59,11 @@ function buildPartyXml(root: XMLBuilder, tagName: string, party: Party): void {
     .up();
 
   // Party Tax Scheme (if VAT number provided)
-  if (party.vatNumber) {
+  if (party.isVatPayer) {
     partyElement
       .ele('cac:PartyTaxScheme')
       .ele('cbc:CompanyID')
-      .txt(normalizeVatNumber(party.vatNumber))
+      .txt(normalizeVatNumber(party.companyId))
       .up()
       .ele('cac:TaxScheme')
       .ele('cbc:ID')
@@ -274,7 +267,7 @@ function validateLine(line: InvoiceLine, index: number): void {
  *   supplier: {
  *     registrationName: 'Furnizor SRL',
  *     companyId: 'RO12345678',
- *     vatNumber: 'RO12345678',
+ *     isVatPayer: true,
  *     address: {
  *       street: 'Str. Exemplu 1',
  *       city: 'București',
@@ -284,6 +277,7 @@ function validateLine(line: InvoiceLine, index: number): void {
  *   customer: {
  *     registrationName: 'Client SRL',
  *     companyId: 'RO87654321',
+ *     isVatPayer: true,
  *     address: {
  *       street: 'Str. Client 2',
  *       city: 'Cluj-Napoca',
@@ -298,7 +292,6 @@ function validateLine(line: InvoiceLine, index: number): void {
  *       taxPercent: 19
  *     }
  *   ],
- *   isSupplierVatPayer: true
  * });
  * ```
  */
@@ -308,7 +301,7 @@ export function buildInvoiceXml(input: InvoiceInput): string {
 
   // Set defaults
   const currency = input.currency || DEFAULT_CURRENCY;
-  const isSupplierVatPayer = input.isSupplierVatPayer ?? !!input.supplier.vatNumber;
+  const isSupplierVatPayer = !!input.supplier.isVatPayer;
   const invoiceTypeCode = input.invoiceTypeCode || InvoiceTypeCode.COMMERCIAL_INVOICE;
 
   // Format dates
@@ -506,14 +499,4 @@ export function buildInvoiceXml(input: InvoiceInput): string {
   });
 
   return root.end({ prettyPrint: true });
-}
-
-/**
- * Legacy compatibility function
- * @param input UBL invoice input (legacy format)
- * @returns UBL XML string
- * @deprecated Use buildInvoiceXml instead
- */
-export function buildUblInvoiceXml(input: UblInvoiceInput): string {
-  return buildInvoiceXml(input);
 }

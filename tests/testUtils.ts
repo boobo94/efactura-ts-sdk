@@ -44,7 +44,6 @@ export const mockTestData = {
         taxPercent: 19,
       },
     ],
-    isSupplierVatPayer: true,
   } as InvoiceInput,
 
   // Mock XML responses

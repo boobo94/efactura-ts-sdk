@@ -138,7 +138,7 @@ describe('AnafDetailsClient Unit Tests', () => {
         },
         postalCode: '010101',
         contactPhone: '0212345678',
-        scpTva: true,
+        isVatPayer: true,
       });
 
       expect(fetch).toHaveBeenCalledWith(
@@ -491,9 +491,9 @@ describe('AnafDetailsClient Unit Tests', () => {
       expect(result.success).toBe(true);
       expect(result.data).toHaveLength(2);
       expect(result.data?.[0]?.name).toBe('Company One SRL');
-      expect(result.data?.[0]?.scpTva).toBe(true);
+      expect(result.data?.[0]?.isVatPayer).toBe(true);
       expect(result.data?.[1]?.name).toBe('Company Two SRL');
-      expect(result.data?.[1]?.scpTva).toBe(false);
+      expect(result.data?.[1]?.isVatPayer).toBe(false);
 
       expect(fetch).toHaveBeenCalledTimes(1);
       const fetchCall = (fetch as jest.Mock).mock.calls[0];
@@ -683,7 +683,7 @@ describe('AnafDetailsClient Unit Tests', () => {
       expect(result.data?.[0]?.registrationNumber).toBe('');
       expect(result.data?.[0]?.contactPhone).toBe('');
       expect(result.data?.[0]?.postalCode).toBe(null);
-      expect(result.data?.[0]?.scpTva).toBe(true);
+      expect(result.data?.[0]?.isVatPayer).toBe(true);
     });
   });
 });

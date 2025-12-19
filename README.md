@@ -102,7 +102,7 @@ const xml = builder.generateInvoiceXml({
   supplier: {
     registrationName: 'Company SRL',
     companyId: 'RO12345678',
-    vatNumber: 'RO12345678',
+    isVatPayer: true,
     address: {
       street: 'Str. Example 1',
       city: 'Bucharest',
@@ -112,6 +112,7 @@ const xml = builder.generateInvoiceXml({
   customer: {
     registrationName: 'Customer SRL',
     companyId: 'RO87654321',
+    isVatPayer: true,
     address: {
       street: 'Str. Customer 2',
       city: 'Cluj-Napoca',
@@ -126,7 +127,6 @@ const xml = builder.generateInvoiceXml({
       taxPercent: 19,
     },
   ],
-  isSupplierVatPayer: true,
 });
 ```
 
@@ -253,7 +253,7 @@ const xml = builder.generateInvoiceXml({
   supplier: {
     registrationName: 'My Company SRL',
     companyId: 'RO12345678',
-    vatNumber: 'RO12345678',
+    isVatPayer: true,
     address: {
       street: 'Str. Example 1',
       city: 'Bucharest',
@@ -263,7 +263,7 @@ const xml = builder.generateInvoiceXml({
   customer: {
     registrationName: customerData.data[0].name,
     companyId: customerData.data[0].vatCode,
-    vatNumber: customerData.data[0].vatCode,
+    isVatPayer: customerData.data[0].isVatPayer,
     address: {
       street: customerData.data[0].address,
       city: 'Cluj-Napoca', // Parse from address if needed
@@ -278,7 +278,6 @@ const xml = builder.generateInvoiceXml({
       taxPercent: customerData.data[0].scpTva ? 19 : 0, // Apply VAT if customer is VAT registered
     },
   ],
-  isSupplierVatPayer: true,
 });
 
 // 4. Upload to ANAF

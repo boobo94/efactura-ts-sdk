@@ -5,16 +5,7 @@
  * compliant with Romanian CIUS-RO specification for ANAF e-Factura.
  */
 
-export { buildInvoiceXml, buildUblInvoiceXml } from './InvoiceBuilder';
+export { buildInvoiceXml } from './InvoiceBuilder';
 
 // Re-export types for convenience
-export type {
-  InvoiceInput,
-  InvoiceLine,
-  Party,
-  Address,
-  UblInvoiceInput,
-  UblParty,
-  UblAddress,
-  UblInvoiceLine,
-} from '../types';
+export type { InvoiceInput, InvoiceLine, Party, Address } from '../types';

@@ -115,7 +115,7 @@ export class AnafDetailsClient {
           },
           postalCode: element.date_generale.codPostal,
           contactPhone: element.date_generale.telefon,
-          scpTva: element.inregistrare_scop_Tva.scpTVA || false,
+          isVatPayer: element.inregistrare_scop_Tva.scpTVA || false,
         });
       });
 

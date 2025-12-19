@@ -41,7 +41,7 @@ describeIf('AnafEfacturaClient Integration Tests', () => {
     supplier: {
       registrationName: 'Test Supplier SRL',
       companyId: testVatNumber,
-      vatNumber: testVatNumber,
+      isVatPayer: true,
       address: {
         street: 'Str. Test 1',
         city: 'Bucharest',
@@ -66,7 +66,6 @@ describeIf('AnafEfacturaClient Integration Tests', () => {
         taxPercent: 19,
       },
     ],
-    isSupplierVatPayer: true,
   };
 
   beforeAll(async () => {

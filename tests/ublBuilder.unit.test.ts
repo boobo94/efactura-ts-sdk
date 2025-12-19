@@ -37,7 +37,7 @@ describe('UblBuilder Tests', () => {
       expect(xml).toContain(invoiceData.invoiceNumber);
       expect(xml).toContain(invoiceData.supplier.registrationName);
       expect(xml).toContain(invoiceData.customer.registrationName);
-      expect(xml).toContain(invoiceData.supplier.vatNumber);
+      expect(xml).toContain(invoiceData.supplier.companyId);
     });
 
     test('should include invoice metadata', () => {
@@ -60,7 +60,7 @@ describe('UblBuilder Tests', () => {
         supplier: {
           registrationName: 'Test Company SRL',
           companyId: 'RO12345678',
-          vatNumber: 'RO12345678',
+          isVatPayer: true,
           address: {
             street: 'Str. Testului 123',
             city: 'Bucharest',
@@ -185,7 +185,6 @@ describe('UblBuilder Tests', () => {
       // Test VAT payer
       const vatPayerData: InvoiceInput = {
         ...mockTestData.invoiceData,
-        isSupplierVatPayer: true,
       };
 
       const vatPayerXml = builder.generateInvoiceXml(vatPayerData);
@@ -195,7 +194,6 @@ describe('UblBuilder Tests', () => {
       // Test non-VAT payer
       const nonVatPayerData: InvoiceInput = {
         ...mockTestData.invoiceData,
-        isSupplierVatPayer: false,
       };
 
       const nonVatPayerXml = builder.generateInvoiceXml(nonVatPayerData);

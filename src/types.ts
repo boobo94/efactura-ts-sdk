@@ -259,8 +259,8 @@ export interface Party {
   registrationName: string;
   /** Company ID (CIF/CUI) */
   companyId: string;
-  /** VAT number (e.g., RO12345678) */
-  vatNumber?: string;
+  /** Wether Company is vat payer */
+  isVatPayer?: boolean;
   /** Company address */
   address: Address;
 }
@@ -327,25 +327,7 @@ export interface InvoiceInput {
   lines: InvoiceLine[];
   /** Payment IBAN (optional) */
   paymentIban?: string;
-  /** Whether supplier is VAT registered */
-  isSupplierVatPayer?: boolean;
 }
-
-/**
- * Legacy interface for backward compatibility
- */
-export interface UblInvoiceInput extends InvoiceInput {
-  isSupplierVatPayer: boolean;
-}
-
-/**
- * Legacy interfaces for backward compatibility
- */
-export interface UblAddress extends Address {}
-export interface UblParty extends Party {
-  vatIdentifier?: string;
-}
-export interface UblInvoiceLine extends InvoiceLine {}
 
 /**
  * Error response structure
@@ -404,7 +386,7 @@ export interface AnafCompanyData {
   /** Contact phone */
   contactPhone: string;
   /** Whether company is VAT registered */
-  scpTva: boolean;
+  isVatPayer: boolean;
 }
 
 /**

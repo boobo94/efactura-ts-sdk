@@ -19,7 +19,7 @@ import { tryCatch } from './tryCatch';
  *   supplier: {
  *     registrationName: 'Company SRL',
  *     companyId: 'RO12345678',
- *     vatNumber: 'RO12345678',
+ *     isVatPayer: true,
  *     address: {
  *       street: 'Str. Example 1',
  *       city: 'Bucharest',
@@ -29,6 +29,7 @@ import { tryCatch } from './tryCatch';
  *   customer: {
  *     registrationName: 'Customer SRL',
  *     companyId: 'RO87654321',
+ *     isVatPayer: true,
  *     address: {
  *       street: 'Str. Customer 2',
  *       city: 'Cluj-Napoca',
@@ -43,7 +44,6 @@ import { tryCatch } from './tryCatch';
  *       taxPercent: 19
  *     }
  *   ],
- *   isSupplierVatPayer: true
  * });
  * ```
  */

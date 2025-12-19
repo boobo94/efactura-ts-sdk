@@ -290,16 +290,3 @@ export function extractErrorMessage(response: any): string | null {
   if (response?.mesaj && response?.stare === 'nok') return response.mesaj;
   return null;
 }
-
-/**
- * Legacy function for backward compatibility - delegates to appropriate parser
- * @deprecated Use parseUploadResponse or parseStatusResponse instead
- */
-export function parseXmlResponse(xmlString: string): UploadResponse | StatusResponse {
-  // Try to determine response type by looking for ExecutionStatus attribute
-  if (xmlString.includes('ExecutionStatus=')) {
-    return parseUploadResponse(xmlString);
-  } else {
-    return parseStatusResponse(xmlString);
-  }
-}
