@@ -283,6 +283,14 @@ export enum InvoiceTypeCode {
    * For instance the line item information might be excluded.
    */
   INVOICE_INFORMATION_FOR_ACCOUNTING_PURPOSES = '751',
+
+  /**
+   * General Credit Note
+   *
+   * The credit note is used to correct amounts or settle balances between a Supplier to a Buyer.
+   * You are not required to provide a reference to the previous invoice. However, we recommend that you do so.
+   */
+  CREDIT_NOTE = '381',
 }
 
 /**
