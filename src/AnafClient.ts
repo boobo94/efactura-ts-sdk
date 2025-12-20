@@ -265,7 +265,7 @@ export class AnafEfacturaClient {
    * @throws {AnafValidationError} If parameters are invalid
    * @throws {AnafAuthenticationError} If authentication is not configured or fails
    */
-  public async downloadDocument(downloadId: string): Promise<string> {
+  public async downloadDocument(downloadId: string): Promise<Buffer> {
     this.validateDownloadId(downloadId);
 
     const params = buildDownloadParams(downloadId);
@@ -279,7 +279,7 @@ export class AnafEfacturaClient {
         },
       });
 
-      return response.data;
+      return Buffer.from(response.data);
     });
 
     if (error) {

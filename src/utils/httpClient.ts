@@ -132,8 +132,13 @@ export class HttpClient {
   private async parseResponse<T>(response: Response): Promise<T> {
     const contentType = response.headers.get('content-type') || '';
 
-    // For ArrayBuffer responses (PDF files)
-    if (contentType.includes('application/pdf') || contentType.includes('application/octet-stream')) {
+    // For ArrayBuffer responses (PDF, ZIP files)
+    if (
+      contentType.includes('application/pdf') ||
+      contentType.includes('application/octet-stream') ||
+      contentType.includes('application/zip') ||
+      contentType.includes('application/x-zip-compressed')
+    ) {
       return response.arrayBuffer() as Promise<T>;
     }
 
