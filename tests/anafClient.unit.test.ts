@@ -340,12 +340,12 @@ describe('AnafEfacturaClient Unit Tests', () => {
         headers: {
           get: (name: string) => (name === 'content-type' ? 'application/zip' : null),
         },
-        text: () => Promise.resolve(mockDownloadContent),
+        arrayBuffer: () => Promise.resolve(mockDownloadContent),
       });
 
       const result = await client.downloadDocument(mockDownloadId);
 
-      expect(result).toBe(mockDownloadContent);
+      expect(result).toEqual(Buffer.from(mockDownloadContent));
     });
 
     test('should validate upload ID for status check', async () => {
