@@ -80,6 +80,7 @@ export function buildOAuthAuthorizationUrl(
     redirect_uri: string;
     scope?: string;
     token_content_type?: string;
+    state?: { [x: string]: any };
   }
 ): string {
   const queryParams = new URLSearchParams();
@@ -96,7 +97,25 @@ export function buildOAuthAuthorizationUrl(
     queryParams.append('token_content_type', params.token_content_type);
   }
 
+  if (params.state) {
+    queryParams.append('state', encodeOAuthState(params.state));
+  }
+
   return `${baseUrl}?${queryParams.toString()}`;
+}
+
+/**
+ * Encode OAuth state as base64 to ensure safe transport through query params
+ */
+export function encodeOAuthState(state: Record<string, any>): string {
+  return Buffer.from(JSON.stringify(state), 'utf8').toString('base64');
+}
+
+/**
+ * Decode base64-encoded OAuth state back to its original object
+ */
+export function decodeOAuthState<T = Record<string, any>>(encodedState: string): T {
+  return JSON.parse(Buffer.from(encodedState, 'base64').toString('utf8'));
 }
 
 /**

@@ -1,7 +1,7 @@
-import { AnafAuthConfig, TokenResponse } from './types';
+import { AnafAuthConfig, AuthUrlSettings, TokenResponse } from './types';
 import { AnafAuthenticationError, AnafValidationError } from './errors';
 import { OAUTH_AUTHORIZE_URL, OAUTH_TOKEN_URL } from './constants';
-import { buildOAuthAuthorizationUrl, encodeOAuthTokenRequest } from './utils/formEncoder';
+import { buildOAuthAuthorizationUrl, decodeOAuthState, encodeOAuthTokenRequest } from './utils/formEncoder';
 import { HttpClient } from './utils/httpClient';
 import { tryCatch } from './tryCatch';
 
@@ -28,13 +28,14 @@ export class AnafAuthenticator {
   /**
    * Generate OAuth authorization URL for user authentication
    */
-  public getAuthorizationUrl(scope?: string): string {
+  public getAuthorizationUrl(settings?: AuthUrlSettings): string {
     return buildOAuthAuthorizationUrl(OAUTH_AUTHORIZE_URL, {
       client_id: this.config.clientId,
       response_type: 'code',
       redirect_uri: this.config.redirectUri,
       token_content_type: 'jwt',
-      scope,
+      scope: settings?.scope,
+      state: settings?.state,
     });
   }
 

@@ -74,6 +74,14 @@ export interface OAuthTokens {
 }
 
 /**
+ * Configuration for building authorization URL
+ */
+export interface AuthUrlSettings {
+  scope?: string;
+  state?: { [x: string]: any };
+}
+
+/**
  * Standard document types supported by ANAF e-Factura
  */
 export type StandardType = 'UBL' | 'CN' | 'CII' | 'RASP';

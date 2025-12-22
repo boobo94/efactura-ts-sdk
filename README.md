@@ -35,7 +35,9 @@ const auth = new AnafAuthenticator({
 });
 
 // Get authorization URL (user will authenticate with USB token)
-const authUrl = auth.getAuthorizationUrl();
+const authUrl = auth.getAuthorizationUrl({
+  state: { sessionId: 'abc123', returnTo: '/dashboard' }, // optional
+});
 console.log('Redirect user to:', authUrl);
 
 // Exchange authorization code for tokens
@@ -241,7 +243,10 @@ if (!customerData.success) {
 }
 
 // 2. Authentication (one-time setup)
-const authUrl = auth.getAuthorizationUrl();
+const authUrl = auth.getAuthorizationUrl({
+  // set the state param optional if you want to receive identifiers on anaf callback url
+  state: { sessionId: 'abc123', customerVat: customerData.data[0].vatCode },
+});
 // Direct user to authUrl, they authenticate with USB token
 const tokens = await auth.exchangeCodeForToken(authCode);
 
@@ -357,9 +362,13 @@ The complete OAuth flow with USB token authentication:
 1. **Generate Authorization URL**:
 
    ```typescript
-   const authUrl = auth.getAuthorizationUrl();
+   const authUrl = auth.getAuthorizationUrl({
+     state: { companyId: 123, foo: 'bar' }, // optional
+   });
    console.log('Direct user to:', authUrl);
    ```
+
+   State objects are JSON-serialized and base64-encoded automatically; use `decodeOAuthState` in your callback to validate them.
 
 2. **User Authentication Process**:
    - User clicks/visits the authorization URL
@@ -376,10 +385,15 @@ The complete OAuth flow with USB token authentication:
    ```typescript
    // Your callback endpoint receives: ?code=AUTH_CODE&state=STATE
    app.get('/oauth/callback', async (req, res) => {
-     const { code } = req.query;
+     const { code, state } = req.query;
 
      try {
        const tokens = await auth.exchangeCodeForToken(code);
+
+       // Optionally validate decodedState.sessionId against your session store
+       const decodedState = state ? decodeOAuthState(state) : undefined;
+       // decodedState = { companyId: 123, foo: 'bar' }
+
        // Store tokens securely
        res.send('Authentication successful!');
      } catch (error) {

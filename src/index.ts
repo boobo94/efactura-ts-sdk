@@ -56,6 +56,7 @@ export * from './ubl';
 export * as Utils from './utils/xmlParser';
 export * as DateUtils from './utils/dateUtils';
 export * as FormUtils from './utils/formEncoder';
+export { decodeOAuthState } from './utils/formEncoder';
 export * as ValidatorsUtils from './utils/validators';
 
 // Constants (for advanced users)

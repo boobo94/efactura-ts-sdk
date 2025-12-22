@@ -3,6 +3,7 @@ import {
   buildQueryString,
   encodeOAuthTokenRequest,
   buildOAuthAuthorizationUrl,
+  decodeOAuthState,
   extractOAuthCode,
   extractOAuthError,
 } from '../src/utils/formEncoder';
@@ -57,6 +58,20 @@ describe('formEncoder utilities', () => {
     expect(parsed.searchParams.get('response_type')).toBe('code');
     expect(parsed.searchParams.get('scope')).toBe('openid email');
     expect(parsed.searchParams.get('token_content_type')).toBe('json');
+  });
+
+  test('buildOAuthAuthorizationUrl base64-encodes state object and it can be decoded back', () => {
+    const url = buildOAuthAuthorizationUrl('https://auth.example/authorize', {
+      client_id: 'cid',
+      response_type: 'code',
+      redirect_uri: 'https://app/cb',
+      state: { sessionId: 'abc123', returnTo: '/dashboard' },
+    });
+
+    const parsed = new URL(url);
+    const encodedState = parsed.searchParams.get('state');
+    expect(encodedState).toBeTruthy();
+    expect(decodeOAuthState(encodedState!)).toEqual({ sessionId: 'abc123', returnTo: '/dashboard' });
   });
 
   test('extractOAuthCode extracts code or returns null on invalid input', () => {
